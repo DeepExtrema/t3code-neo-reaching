@@ -9,8 +9,33 @@ A dark theme for [T3 Code](https://t3.codes) that combines two others:
 
 The aurora is redrawn as dots on the same grid as the hands, so the two pictures read as one drawing.
 
-The hands are artwork by @samdape and are not free to redistribute. This repository is private.
-Read [NOTICE.md](NOTICE.md) before you share it or make it public.
+![Typing a message and getting a reply in T3 Code with the Neo Reaching theme](media/thread.gif)
+
+## Screenshots
+
+![A new thread: the hands, the aurora in dots, the sidebar and the chat box](media/home.png)
+
+![A reply with a diff, the wave on the right hand](media/thread.png)
+
+Every 7.5 seconds one wave crosses from arm to arm and turns the dots it passes into characters:
+
+![The wave crossing the hands behind a new thread](media/wave.gif)
+
+Sidebar rows put the thread title on top, then the project and its status, then the branch. Pinned threads and
+unsent drafts carry a marker in front of the title:
+
+![The sidebar with a draft, a pinned thread and threads on three branches](media/sidebar.png)
+
+The model picker has the search on top, then the providers, the models and the effort keys:
+
+![The model picker](media/model-picker.png)
+
+![Changing the effort level in the model picker](media/model-picker.gif)
+
+The screenshots show T3 Code with invented demo projects.
+
+The hands are artwork by @samdape. This repository publishes them with permission from @samdape and neverblinks.
+Read [NOTICE.md](NOTICE.md) before you copy the picture anywhere else.
 
 ## Install
 
@@ -65,4 +90,5 @@ The CSS is 96,103 characters, so about 3,900 are free.
 
 - The sidebar rows and the model picker hook into T3 Code's internal class names, which change between releases.
   After a T3 Code update some of them may fall back to T3 Code's normal look.
-- Checked in Chrome and on T3 Code 0.1.11-nightly.20261119 on macOS.
+- Tested on T3 Code 0.1.11 in the web client in Chromium on Linux, and on 0.1.11-nightly.20261119 in the desktop app
+  on macOS.
