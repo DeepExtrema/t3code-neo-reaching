@@ -14,6 +14,13 @@ export const MODEL_PICKER = true;     // Nyx Plus's model picker; false leaves T
 // The aurora: Nyx's picture stretched over the window and shown only through dots on Reaching's grid.
 // `x`, `y` is one resting dot of the hands and `dx`, `dy` the grid's pitch, in the scene's own units.
 export const AURORA = { x: 7.7, y: 360.4, dx: 11.2, dy: 21.1, dot: 6.5, place: "50% 58%/112% 128%", filter: "brightness(1.5) saturate(1.15)" };
+// The two arms: Reaching draws them white. Here they take the theme's violet, sit at `opacity`, and fade out at
+// both screen edges. The right arm is the denser one, so `mask` also dims the right half to 70% to match the left.
+export const ARMS = {
+  colors: { f2f2f2: "a89eff", e0e0e0: "958af5", d4d4d4: "8c82ec", bdbdbd: "7268cc" },
+  opacity: 0.6,
+  mask: "linear-gradient(90deg,rgb(0 0 0/.12) 0%,#000 24%,#000 50%,rgb(0 0 0/.7) 60%,rgb(0 0 0/.7) 76%,rgb(0 0 0/.08) 100%)",
+};
 
 /** The top-level rules of a stylesheet, as [prelude, whole rule]. Braces inside strings do not count. */
 export function rules(css) {
@@ -44,8 +51,15 @@ export function buildTheme() {
   // The scene opens with a black sheet over its whole viewBox. The page behind it is black already, and without
   // the sheet the aurora can sit under the scene.
   const sheet = /(%3Csvg viewBox='[^']+' preserveAspectRatio='[^']+'>)%3Crect x='-?[\d.]+' width='[\d.]+' height='[\d.]+' fill='%23000'\/>/;
-  const backdrop = reaching.css.slice(0, mark).replace(sheet, "$1");
+  let backdrop = reaching.css.slice(0, mark).replace(sheet, "$1");
   if (backdrop.length === mark) throw new Error("Reaching: the scene's black sheet was not found");
+  for (const [from, to] of Object.entries(ARMS.colors)) {
+    if (backdrop.split(`%23${from}`).length !== 3) throw new Error(`Reaching: the arms' colour #${from} is not used twice`);
+    backdrop = backdrop.replaceAll(`%23${from}`, `%23${to}`);
+  }
+  const sized = " 50% 50%/100% 100% no-repeat}";
+  if (!backdrop.endsWith(sized)) throw new Error("Reaching: the scene's layer no longer ends with its size");
+  backdrop = backdrop.slice(0, -1) + `;opacity:${ARMS.opacity};-webkit-mask:${ARMS.mask};mask:${ARMS.mask}}`;
 
   // ---- the picture ----
   // The dots are one dashed line per row, the way the scene draws its own, inside the scene's viewBox: the two
@@ -71,7 +85,6 @@ export function buildTheme() {
   const fromReaching = take(panels, "Reaching", [
     `[data-slot="sidebar-wrapper"],[data-slot="sidebar"],[data-slot="sidebar-inset"],div:has(>[data-chat-column]),[data-chat-column],.messages-timeline-scroll,[data-timeline-loading]`,
     `[data-workspace-area="conversation"]`,
-    `@media (min-width:768px)`,
     `[data-slot="composer-shell"]`,
     `[data-slot="composer-shell"]::before,[data-slot="composer-host"]::before`,
     `[data-slot="composer-host"]::after`,

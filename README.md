@@ -7,7 +7,9 @@ A dark theme for [T3 Code](https://t3.codes) that combines two others:
 - From [Nyx and Nyx Plus](https://github.com/Deepusleepy/t3-nyx-theme): the purple aurora, the violet glow on the
   panels, sidebar rows with the thread title on top, and the model picker.
 
-The aurora is redrawn as dots on the same grid as the hands, so the two pictures read as one drawing.
+The aurora is redrawn as dots on the same grid as the hands, so the two pictures read as one drawing. The arms are
+drawn in the theme's violet instead of Reaching's white, at 60% opacity, and fade out toward both screen edges. The
+right arm is denser than the left, so its half is dimmed to 70% and the two arms look the same distance away.
 
 ![Typing a message and getting a reply in T3 Code with the Neo Reaching theme](media/thread.gif)
 
@@ -52,8 +54,8 @@ To go back, pick another theme in Settings, Appearance, or run `t3 theme set <id
 
 | Part | Source |
 | --- | --- |
-| Hands, wave, dark edges | Reaching |
-| Dark lane behind the chat, and how it follows the sidebar | Reaching |
+| Hands, wave, dark edges | Reaching, with the arms in violet, fainter, and faded at the screen edges |
+| Dark lane behind the chat | Reaching, without its rule that kept the lane dark up to an open sidebar |
 | Chat box: one frosted card | Reaching's shape, Nyx's colours |
 | Aurora | Nyx's picture, shown through dots on Reaching's grid |
 | Colours, sidebar, header, your messages, send button, popups, switches | Nyx Plus |
@@ -75,16 +77,17 @@ It reads `vendor/reaching/theme.json`, `vendor/nyx/nyx.json` and `vendor/nyx/nyx
 each by their selectors, and writes `theme.json`. If a source no longer has a rule the build expects, the build stops
 and names the rule.
 
-To follow a new version of Reaching or Nyx, replace its file in `vendor/` and rebuild. Three settings sit at the top
+To follow a new version of Reaching or Nyx, replace its file in `vendor/` and rebuild. Four settings sit at the top
 of `build.mjs`:
 
 | Setting | Meaning |
 | --- | --- |
 | `MODEL_PICKER` | `false` keeps T3 Code's own model picker. |
 | `AURORA` | Where the dots sit, their size, and how the aurora picture is placed and brightened. |
+| `ARMS` | The arms' colours (Reaching's greys mapped to violets), their opacity, and the mask that fades them at the edges and balances the right arm against the left. |
 | `MAX_CSS` | T3 Code's limit for a theme's CSS, 100,000 characters. The build stops above it. |
 
-The CSS is 96,103 characters, so about 3,900 are free.
+The CSS is 96,166 characters, so about 3,800 are free.
 
 ## Limits
 
